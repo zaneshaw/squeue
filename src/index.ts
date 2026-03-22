@@ -11,6 +11,8 @@ export class Queue {
 	static readonly queues: Queue[] = [];
 
 	readonly runs: JobRun[] = [];
+	beforeRun?: (run: JobRun) => void;
+	afterFinish?: (run: JobRun, result: JobResult) => void;
 
 	constructor(...jobs: Job[]) {
 		for (const job of jobs) {
@@ -24,6 +26,7 @@ export class Queue {
 		const first = this.runs[0];
 
 		if (this.runs.length > 0 && first instanceof JobRun && !first.isRunning) {
+			this.beforeRun?.(first);
 			first.run().then((result) => {
 				if (result == JobResult.FAIL_QUEUE) {
 					this.clear();
@@ -31,6 +34,7 @@ export class Queue {
 				}
 
 				this.runs.shift();
+				this.afterFinish?.(first, result);
 
 				this.tryRunFirst();
 			});
