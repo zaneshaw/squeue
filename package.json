@@ -1,0 +1,24 @@
+{
+  "name": "squeue",
+  "module": "index.ts",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "A lightweight queue/job system",
+  "keywords": [
+    "queue",
+    "job",
+    "task"
+  ],
+  "homepage": "https://github.com/zaneshaw/squeue#readme",
+  "bugs": {
+    "url": "https://github.com/zaneshaw/squeue/issues"
+  },
+  "license": "MIT",
+  "author": "Zane Shaw <zane@squidee.dev> (https://squidee.dev)",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}
