@@ -31,7 +31,6 @@ export class Queue {
 				}
 
 				this.runs.shift();
-				first.job.afterFinish(result);
 
 				this.tryRunFirst();
 			});
@@ -68,15 +67,15 @@ export class Job {
 	readonly id: string;
 	readonly name: string;
 	readonly callback: () => JobResult | Promise<JobResult | void> | void;
-	readonly beforeRun: () => void;
-	readonly afterFinish: (result: JobResult) => void;
+	readonly beforeRun?: () => void;
+	readonly afterFinish?: (result: JobResult) => void;
 
-	constructor(name: string, callback: () => JobResult | Promise<JobResult | void> | void, onRun: () => void, onFinish: (result: JobResult) => void) {
+	constructor(name: string, callback: () => JobResult | Promise<JobResult | void> | void, beforeRun?: () => void, afterFinish?: (result: JobResult) => void) {
 		this.id = uuidv7();
 		this.name = name;
 		this.callback = callback;
-		this.beforeRun = onRun;
-		this.afterFinish = onFinish;
+		this.beforeRun = beforeRun;
+		this.afterFinish = afterFinish;
 	}
 
 	new() {
@@ -105,12 +104,16 @@ export class JobRun {
 			throw new Error("already running!");
 		}
 
-		this.job.beforeRun();
+		this.job.beforeRun?.();
 
 		this.running = true;
 		this.startTime = performance.now();
 
-		return (await this.job.callback()) ?? JobResult.OK;
+		const result = (await this.job.callback()) ?? JobResult.OK;
+
+		this.job.afterFinish?.(result);
+
+		return result;
 	}
 
 	get isRunning() {
