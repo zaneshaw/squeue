@@ -1,20 +1,38 @@
 {
-  "name": "squeue",
-  "module": "index.ts",
-  "type": "module",
+  "name": "@zaneshaw/squeue",
   "version": "1.0.0",
   "description": "A lightweight queue/job system",
+  "author": "Zane Shaw <zane@squidee.dev> (https://squidee.dev)",
+  "license": "MIT",
+  "homepage": "https://github.com/zaneshaw/squeue#readme",
+  "bugs": {
+    "url": "https://github.com/zaneshaw/squeue/issues"
+  },
   "keywords": [
     "queue",
     "job",
     "task"
   ],
-  "homepage": "https://github.com/zaneshaw/squeue#readme",
-  "bugs": {
-    "url": "https://github.com/zaneshaw/squeue/issues"
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    }
   },
-  "license": "MIT",
-  "author": "Zane Shaw <zane@squidee.dev> (https://squidee.dev)",
+  "files": [
+    "dist/*.js",
+    "dist/*.d.ts"
+  ],
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "bun run clean && bun run build:esm && bun run build:cjs && bun run build:declaration",
+    "build:esm": "bun build ./src/index.ts --external '*' --format esm --outdir dist/",
+    "build:cjs": "bun build ./src/index.ts --external '*' --format cjs --outfile dist/index.cjs",
+    "build:declaration": "tsc --emitDeclarationOnly --project tsconfig.types.json",
+    "prepublishOnly": "bun run build"
+  },
   "devDependencies": {
     "@types/bun": "latest"
   },
