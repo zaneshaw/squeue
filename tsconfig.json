@@ -16,7 +16,6 @@
     "verbatimModuleSyntax": true,
     "noEmit": true,
     "composite": true,
-    "tsBuildInfoFile": "./node_modules/.cache/tsconfig.types.tsbuildinfo",
 
     // Best practices
     "strict": true,

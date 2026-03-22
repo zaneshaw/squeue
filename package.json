@@ -1,6 +1,6 @@
 {
   "name": "@zaneshaw/squeue",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A lightweight queue/job system",
   "author": "Zane Shaw <zane@squidee.dev> (https://squidee.dev)",
   "license": "MIT",
@@ -22,12 +22,10 @@
     }
   },
   "files": [
-    "dist/*.js",
-    "dist/*.d.ts"
+    "dist"
   ],
   "scripts": {
-    "clean": "rm -rf dist",
-    "build": "bun run clean && bun run build:esm && bun run build:cjs && bun run build:declaration",
+    "build": "bun run build:esm && bun run build:cjs && bun run build:declaration",
     "build:esm": "bun build ./src/index.ts --external '*' --format esm --outdir dist/",
     "build:cjs": "bun build ./src/index.ts --external '*' --format cjs --outfile dist/index.cjs",
     "build:declaration": "tsc --emitDeclarationOnly --project tsconfig.types.json",
