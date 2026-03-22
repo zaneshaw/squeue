@@ -1,6 +1,6 @@
 {
   "name": "@zaneshaw/squeue",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A lightweight queue/job system",
   "author": "Zane Shaw <zane@squidee.dev> (https://squidee.dev)",
   "license": "MIT",
@@ -14,6 +14,9 @@
     "task"
   ],
   "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.js",
   "exports": {
     ".": {
       "import": "./dist/index.js",
